@@ -12,7 +12,7 @@ public class david {
 
     // Generador de numeros aleatorios
     public static int generarNumeroAleatorio(){
-        int numero = rd.nextInt(1, 101);
+        int numero = rd.nextInt(101, 1000);
         return numero;
     }
 
@@ -22,6 +22,21 @@ public class david {
         return auxiliar;
     }
 
-    
+    // Validador de operaciones aritmetricas
+    public static boolean validarDivision(int n1, int n2){
+        boolean validador = true;
+        int max = Math.max(n1, n2);
+        int min = Math.min(n1, n2);
+        int resultado = max / min;
+        if(min == 0){
+            System.out.println("----------------ERROR----------------");
+            validador = false;  
+        }if(n1 % n2 == 0){
+            validador = false;
+        }else{
+            System.out.println(resultado);
+        }
+        return validador;
+    }
 
 }
