@@ -31,12 +31,30 @@ public class david {
         if(min == 0){
             System.out.println("----------------ERROR----------------");
             validador = false;  
-        }if(n1 % n2 == 0){
+        }if(n1 % n2 != 0){
             validador = false;
         }else{
             System.out.println(resultado);
         }
         return validador;
+    }
+
+    // Calculo entre la respuesta de los jugadores y el resultado final
+    public static int calculoDiferencial(int objetivo, int resultado){
+        return Math.abs(objetivo - resultado);
+    }
+
+    // Ganador de la cifra exacta
+    public static int ganadorCifraExacta(int objetivo, int resultadoJ1, int resultadoJ2){
+        int diferenciaJ1 = calculoDiferencial(objetivo, resultadoJ1);
+        int diferenciaJ2 = calculoDiferencial(objetivo, resultadoJ2);
+        if(diferenciaJ1 < diferenciaJ2){
+            return 1; // El jugador 1 gana
+        }else if(diferenciaJ2 < diferenciaJ1){
+            return 2; // El jugador 2 gana
+        }else{
+            return 0; // Empate entre los dos jugadores
+        }
     }
 
 }
