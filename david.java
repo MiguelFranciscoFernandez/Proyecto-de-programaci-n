@@ -3,7 +3,8 @@ import java.util.Random;
 public class david {
     
     static Random rd = new Random();
-    
+    static int puntosTotalesJ1 = 0;
+    static int puntosTotalesJ2 = 0;
     /**
      * LA CIFRA EXACTA
      * @author David Espejo Piñero
@@ -120,4 +121,28 @@ public class david {
         return tiempoActual;
     }
 
+    // Ganador de la prueba Calculadora Mental
+    public static int ganadorCalculadora(long tiempoJ1, long tiempoJ2){
+        int ganador;
+        if(tiempoJ1 < tiempoJ2){
+            ganador = 1;
+            return ganador;
+        }else if(tiempoJ2 < tiempoJ1){
+            ganador = 2;
+            return ganador;
+        }else{
+            //En caso de empate
+            ganador = 0;
+            return ganador;
+        }
+    }
+
+    public static void actualizarMarcardorGlobal(int ganador){
+        if(ganador == 1){
+            puntosTotalesJ1 ++;
+        }else if(ganador == 2){
+            puntosTotalesJ2 ++;
+        }
+        // Si es empate nadie suma punto
+    }
 }

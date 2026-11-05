@@ -5,6 +5,8 @@ public class lógica {
     private static Scanner sc = new Scanner(System.in);
     private static Random rand = new Random();
     static int cantidadLetras = 10;
+    static int puntosTotalesJ1 = 0;
+    static int puntosTotalesJ2 = 0;
 
     public static String generarLetras() {
         String vocales = "AEIOU";
