@@ -18,12 +18,12 @@ public class lógica {
         String letrasSeleccionadas = "";
 
         for (int i = 0; i < numVocales; i++) {
-            int index = rand.nextInt(vocales.length());
+            int index = rd.nextInt(vocales.length());
             letrasSeleccionadas += vocales.charAt(index);
         }
 
         for (int i = 0; i < numConsonantes; i++) {
-            int index = rand.nextInt(consonantes.length());
+            int index = rd.nextInt(consonantes.length());
             letrasSeleccionadas += consonantes.charAt(index);
         }
 
