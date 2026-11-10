@@ -28,11 +28,11 @@ public class david {
         boolean validador = true;
         int max = Math.max(n1, n2);
         int min = Math.min(n1, n2);
-        int resultado = max / min;
-        if(min == 0){
-            System.out.println("----------------ERROR----------------");
-            validador = false;  
-        }if(n1 % n2 != 0){
+        if(min == 0){;
+            validador = false; 
+        }
+        int resultado = max / min; 
+        if(n1 % n2 != 0){
             validador = false;
         }else{
             System.out.println(resultado);
@@ -66,7 +66,7 @@ public class david {
 
     // Generador del primer numero para las operaciones
     public static int generarorAleatorioCalculadora(){
-        int numero = rd.nextInt(2,101);
+        int numero = rd.nextInt(1,101);
         return numero;
     }
 
@@ -74,10 +74,10 @@ public class david {
     public static int generadorSecundario(char operador){
         int numero;
         if(operador == '+' || operador == '-'){
-            numero = rd.nextInt(11,100);
+            numero = rd.nextInt(10,100);
             return numero;
         }else{ 
-            numero = rd.nextInt(2,10);
+            numero = rd.nextInt(1,10);
             return numero;
         }
     }
@@ -144,5 +144,17 @@ public class david {
             puntosTotalesJ2 ++;
         }
         // Si es empate nadie suma punto
+    }
+    /**
+     * Cronus Rumanus
+     * @author David 
+     * @version 1.0
+     * En esta prueba se mostrara un numero desde 1 hata el 3999 en romano y el jugador tendra que adivinar la mayor cantidad posible
+     * de numeros en un minuto. 
+     */
+    //Geerar un numero romano entre 1 y 3999
+    public int generarNumeroRomano(){
+        int romano = rd.nextInt(1,4000);
+        return romano;
     }
 }
