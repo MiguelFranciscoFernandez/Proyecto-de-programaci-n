@@ -106,12 +106,10 @@ public class lógica {
     // Validador de operaciones aritmetricas
     public static boolean validarDivision(int n1, int n2){
         boolean validador = true;
-        int max = Math.max(n1, n2);
         int min = Math.min(n1, n2);
         if(min == 0){
             validador = false;  
         }
-        int resultado = max / min;
         if(n1 % n2 != 0){
             validador = false;
         }
@@ -218,6 +216,129 @@ public class lógica {
             puntosTotalesJ2 ++;
         }
         // Si es empate nadie suma punto
+    }
+
+    /**
+     * Cronus Rumanus
+     * @author David 
+     * @version 1.0
+     * En esta prueba se mostrara un numero desde 1 hata el 3999 en romano y el jugador tendra que adivinar la mayor cantidad posible
+     * de numeros en un minuto. 
+     */
+    //Geerar un numero romano entre 1 y 3999
+    public static int generarNumeroRomano(){
+        int romano = rd.nextInt(1,4000);
+        return romano;
+    }
+
+    public static String convertirARomano(int numero){
+        int unidades = numero % 10;
+        int decenas = (numero / 10) % 10;
+        int centenas = (numero / 100) % 10;
+        int millares = (numero / 1000) % 10;
+
+        String romanoMillares = "";
+        romanoMillares.toUpperCase();
+        switch (millares) {
+            case 1: romanoMillares = "M"; break;
+            case 2: romanoMillares = "MM"; break;
+            case 3: romanoMillares = "MMM"; break;
+        }
+
+        String romanoCentenas = "";
+        romanoCentenas.toUpperCase();
+        switch (centenas) {
+            case 1: romanoCentenas = "C"; break;
+            case 2: romanoCentenas = "CC"; break;
+            case 3: romanoCentenas = "CCC"; break;
+            case 4: romanoCentenas = "CD"; break;
+            case 5: romanoCentenas = "D"; break;
+            case 6: romanoCentenas = "DC"; break;
+            case 7: romanoCentenas = "DCC"; break;
+            case 8: romanoCentenas = "DCCC"; break;
+            case 9: romanoCentenas = "CM"; break;
+        }
+
+        String romanoDecenas = "";
+        romanoDecenas.toUpperCase();
+        switch (decenas) {
+            case 1: romanoDecenas = "X"; break;
+            case 2: romanoDecenas = "XX"; break;
+            case 3: romanoDecenas = "XXX"; break;
+            case 4: romanoDecenas = "XL"; break;
+            case 5: romanoDecenas = "L"; break;
+            case 6: romanoDecenas = "LX"; break;
+            case 7: romanoDecenas = "LXX"; break;
+            case 8: romanoDecenas = "LXXX"; break;
+            case 9: romanoDecenas = "XC"; break;
+        }
+
+        String romanoUnidades = "";
+        romanoUnidades.toUpperCase();
+        switch (unidades) {
+            case 1: romanoUnidades = "I"; break;
+            case 2: romanoUnidades = "II"; break;
+            case 3: romanoUnidades = "III"; break;
+            case 4: romanoUnidades = "IV"; break;
+            case 5: romanoUnidades = "V"; break;
+            case 6: romanoUnidades = "VI"; break;
+            case 7: romanoUnidades = "VII"; break;
+            case 8: romanoUnidades = "VIII"; break;
+            case 9: romanoUnidades = "IX"; break;
+        }
+
+        return romanoMillares + romanoCentenas + romanoDecenas + romanoUnidades;
+    }
+
+    // Ganador de Conus Rumanus
+    public static int ganadorCronusRuma(int aciertosJ1, int aciertosJ2){
+        int ganador;
+        if(aciertosJ1 > aciertosJ2){
+            ganador = 1;
+            return ganador;
+        }else if(aciertosJ2 > aciertosJ1){
+            ganador = 2;
+            return ganador;
+        }else{
+            //En caso de empate
+            ganador = 0;
+            return ganador;
+        }
+    }
+
+    /**
+     *  sistema de puntuacion de las preubas matematicas y decision del ganador del juego 
+    */
+    
+    // Sistema de puntuacion de la Cifra Exacta
+    public static int calcularPuntosCifraExacta(int diferencia) {
+        if (diferencia == 0) {
+            return 10;
+        } else if (diferencia <= 5) {
+            return 5;
+        } else if (diferencia <= 10) {
+            return 3;
+        } else {
+            return 1;
+        }
+    }
+
+    // Sistema de puntuacion de la calculadora
+    public static int calcularPuntosIndividualCalculadora(long tiempoFinalJugador) {
+        int basePuntuacion = 300;
+        int puntos = basePuntuacion - (int) tiempoFinalJugador;
+        return (puntos > 0) ? puntos : 0; // Si es negativo por tardar mucho, se queda en 0
+    }
+
+    // Sistema de puntuacion de Cronus Rumanus
+    public static int calcularPuntosCronusRomanus(int aciertosJugador) {
+        return aciertosJugador;
+    }
+    
+    //Actualizador del marcador global de los jugadores 
+    public static void actualizarMarcardorGlobal(int puntosPruebaJ1, int puntosPruebaJ2){
+        puntosTotalesJ1 += puntosPruebaJ1;
+        puntosTotalesJ2 += puntosPruebaJ2;
     }
 }
 
