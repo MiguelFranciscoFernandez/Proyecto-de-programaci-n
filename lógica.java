@@ -293,7 +293,9 @@ public static boolean contieneSoloLetras(String texto) {
     }
 
     /**
-     *  sistema de puntuacion de las preubas matematicas y decision del ganador del juego 
+     * Sistema de puntuacion de las preubas matematicas y decision del ganador del juego
+     * @author David Espejo Piñero
+     * @version 2.0 
     */
     
     // Sistema de puntuacion de la Cifra Exacta
