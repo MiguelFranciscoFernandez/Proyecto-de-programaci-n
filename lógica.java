@@ -59,6 +59,18 @@ public class lógica {
     }
 }
 
+public static boolean contieneSoloLetras(String texto) {
+    if (texto.length() == 0) {
+        return false;
+    }
+    for (int i = 0; i < texto.length(); i++) {
+        if (!Character.isLetter(texto.charAt(i))) {
+            return false;
+        }
+    }
+    return true;
+}
+
     /**
      * LA CIFRA EXACTA
      * @author David Espejo Piñero
@@ -83,7 +95,7 @@ public class lógica {
         int max = Math.max(n1, n2);
         int min = Math.min(n1, n2);
         if(min == 0){
-            validador = false;  
+            validador = false;
         }
         int resultado = max / min;
         if(n1 % n2 != 0){
