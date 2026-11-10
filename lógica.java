@@ -18,12 +18,12 @@ public class lógica {
         String letrasSeleccionadas = "";
 
         for (int i = 0; i < numVocales; i++) {
-            int index = rand.nextInt(vocales.length());
+            int index = rd.nextInt(vocales.length());
             letrasSeleccionadas += vocales.charAt(index);
         }
 
         for (int i = 0; i < numConsonantes; i++) {
-            int index = rand.nextInt(consonantes.length());
+            int index = rd.nextInt(consonantes.length());
             letrasSeleccionadas += consonantes.charAt(index);
         }
 
@@ -108,14 +108,12 @@ public class lógica {
         boolean validador = true;
         int max = Math.max(n1, n2);
         int min = Math.min(n1, n2);
-        int resultado = max / min;
         if(min == 0){
-            System.out.println("----------------ERROR----------------");
             validador = false;  
-        }if(n1 % n2 != 0){
+        }
+        int resultado = max / min;
+        if(n1 % n2 != 0){
             validador = false;
-        }else{
-            System.out.println(resultado);
         }
         return validador;
     }
@@ -146,7 +144,7 @@ public class lógica {
 
     // Generador del primer numero para las operaciones
     public static int generarorAleatorioCalculadora(){
-        int numero = rd.nextInt(2,101);
+        int numero = rd.nextInt(1,101);
         return numero;
     }
 
@@ -154,10 +152,10 @@ public class lógica {
     public static int generadorSecundario(char operador){
         int numero;
         if(operador == '+' || operador == '-'){
-            numero = rd.nextInt(11,100);
+            numero = rd.nextInt(10,100);
             return numero;
         }else{ 
-            numero = rd.nextInt(2,10);
+            numero = rd.nextInt(1,10);
             return numero;
         }
     }
@@ -185,11 +183,7 @@ public class lógica {
 
     // Validacion de la respuesta del jugador
     public static boolean esRespuestaCorrecta(int respuestaUsuario, int resultado){
-        boolean respuesta = true;
-        if(respuestaUsuario != resultado){
-            respuesta = false;
-        }
-        return respuesta;
+        return respuestaUsuario == resultado;
     }
 
     // Calculo del tiempo final del jugador y aplicar la penalizacion en caso de fallo
@@ -227,4 +221,4 @@ public class lógica {
     }
 }
 
-}
+
