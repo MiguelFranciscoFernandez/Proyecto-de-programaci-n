@@ -2,8 +2,8 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class lógica {
-    private static Scanner sc = new Scanner(System.in);
-    private static Random rd = new Random();
+    static Scanner sc = new Scanner(System.in);
+    static Random rd = new Random();
     static int cantidadLetras = 10;
     static int puntosTotalesJ1 = 0;
     static int puntosTotalesJ2 = 0;
@@ -48,42 +48,28 @@ public class lógica {
         }
         return true;
     }
-    // Gestion de flujo del juego para 2 jugadores
 
-    public static int ejecutarPruebaLetras(String letrasDisponibles) {
-        System.out.println("Jugador 1, introduce una palabra: ");
-        String palabraJugador1 = sc.nextLine();
-
-        if (esValidaPorLetras(palabraJugador1, letrasDisponibles)) {
-            System.out.println("Jugador 1, tu palabra es válida.");
-        } else {
-            System.out.println("Jugador 1, tu palabra no es válida.");
-        }
-
-        System.out.println("Jugador 2, introduce una palabra: ");
-        String palabraJugador2 = sc.nextLine();
-
-        if (esValidaPorLetras(palabraJugador2, letrasDisponibles)) {
-            System.out.println("Jugador 2, tu palabra es válida.");
-        } else {
-            System.out.println("Jugador 2, tu palabra no es válida.");
-        }
-        int longitud1 = palabraJugador1.length();
-        int longitud2 = palabraJugador2.length();
-
-        int ganador = 0;
-        if (longitud1 > longitud2) {
-            System.out.println("Jugador 1 gana con la palabra: " + palabraJugador1);
-            ganador = 1;
-        } else if (longitud2 > longitud1) {
-            System.out.println("Jugador 2 gana con la palabra: " + palabraJugador2);
-            ganador = 2;
-        } else {
-            System.out.println("Empate entre Jugador 1 y Jugador 2.");
-        }
-
-        return ganador;
+    public static int ganadorLetras(int longitudJ1, int longitudJ2) {
+    if (longitudJ1 > longitudJ2) {
+        return 1;
+    } else if (longitudJ2 > longitudJ1) {
+        return 2;
+    } else {
+        return 0;
     }
+}
+
+public static boolean contieneSoloLetras(String texto) {
+    if (texto.length() == 0) {
+        return false;
+    }
+    for (int i = 0; i < texto.length(); i++) {
+        if (!Character.isLetter(texto.charAt(i))) {
+            return false;
+        }
+    }
+    return true;
+}
 
     /**
      * LA CIFRA EXACTA
@@ -108,7 +94,7 @@ public class lógica {
         boolean validador = true;
         int min = Math.min(n1, n2);
         if(min == 0){
-            validador = false;  
+            validador = false;
         }
         if(n1 % n2 != 0){
             validador = false;
