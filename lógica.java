@@ -50,26 +50,26 @@ public class lógica {
     }
 
     public static int ganadorLetras(int longitudJ1, int longitudJ2) {
-    if (longitudJ1 > longitudJ2) {
-        return 1;
-    } else if (longitudJ2 > longitudJ1) {
-        return 2;
-    } else {
-        return 0;
-    }
-}
-
-public static boolean contieneSoloLetras(String texto) {
-    if (texto.length() == 0) {
-        return false;
-    }
-    for (int i = 0; i < texto.length(); i++) {
-        if (!Character.isLetter(texto.charAt(i))) {
-            return false;
+        if (longitudJ1 > longitudJ2) {
+            return 1;
+        } else if (longitudJ2 > longitudJ1) {
+            return 2;
+        } else {
+            return 0;
         }
     }
-    return true;
-}
+
+    public static boolean contieneSoloLetras(String texto) {
+        if (texto.length() == 0) {
+            return false;
+        }
+        for (int i = 0; i < texto.length(); i++) {
+            if (!Character.isLetter(texto.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * LA CIFRA EXACTA
@@ -78,44 +78,44 @@ public static boolean contieneSoloLetras(String texto) {
      */
 
     // Generador de numeros aleatorios
-    public static int generarNumeroAleatorio(){
+    public static int generarNumeroAleatorio() {
         int numero = rd.nextInt(101, 1000);
         return numero;
     }
 
     // Generador de numeros auxiliares
-    public static int generarNumeroAuxiliar(){
-        int auxiliar = rd.nextInt(1,11);
+    public static int generarNumeroAuxiliar() {
+        int auxiliar = rd.nextInt(1, 11);
         return auxiliar;
     }
 
     // Validador de operaciones aritmetricas
-    public static boolean validarDivision(int n1, int n2){
+    public static boolean validarDivision(int n1, int n2) {
         boolean validador = true;
         int min = Math.min(n1, n2);
-        if(min == 0){
+        if (min == 0) {
             validador = false;
         }
-        if(n1 % n2 != 0){
+        if (n1 % n2 != 0) {
             validador = false;
         }
         return validador;
     }
 
     // Calculo entre la respuesta de los jugadores y el resultado final
-    public static int calculoDiferencial(int objetivo, int resultado){
+    public static int calculoDiferencial(int objetivo, int resultado) {
         return Math.abs(objetivo - resultado);
     }
 
     // Ganador de la cifra exacta
-    public static int ganadorCifraExacta(int objetivo, int resultadoJ1, int resultadoJ2){
+    public static int ganadorCifraExacta(int objetivo, int resultadoJ1, int resultadoJ2) {
         int diferenciaJ1 = calculoDiferencial(objetivo, resultadoJ1);
         int diferenciaJ2 = calculoDiferencial(objetivo, resultadoJ2);
-        if(diferenciaJ1 < diferenciaJ2){
+        if (diferenciaJ1 < diferenciaJ2) {
             return 1; // El jugador 1 gana
-        }else if(diferenciaJ2 < diferenciaJ1){
+        } else if (diferenciaJ2 < diferenciaJ1) {
             return 2; // El jugador 2 gana
-        }else{
+        } else {
             return 0; // Empate entre los dos jugadores
         }
     }
@@ -127,25 +127,25 @@ public static boolean contieneSoloLetras(String texto) {
      */
 
     // Generador del primer numero para las operaciones
-    public static int generarorAleatorioCalculadora(){
-        int numero = rd.nextInt(1,101);
+    public static int generarorAleatorioCalculadora() {
+        int numero = rd.nextInt(1, 101);
         return numero;
     }
 
     // Generador para los numeros posteriores para las siguientes operaciones
-    public static int generadorSecundario(char operador){
+    public static int generadorSecundario(char operador) {
         int numero;
-        if(operador == '+' || operador == '-'){
-            numero = rd.nextInt(10,100);
+        if (operador == '+' || operador == '-') {
+            numero = rd.nextInt(10, 100);
             return numero;
-        }else{ 
-            numero = rd.nextInt(1,10);
+        } else {
+            numero = rd.nextInt(1, 10);
             return numero;
         }
     }
 
     // Inicio y continuacion de los diferentes resultados matematico
-    public static int calcularResultado(int numeroActual, char operador, int valorSecundario){
+    public static int calcularResultado(int numeroActual, char operador, int valorSecundario) {
         int resultado;
         switch (operador) {
             case '+':
@@ -166,13 +166,14 @@ public static boolean contieneSoloLetras(String texto) {
     }
 
     // Validacion de la respuesta del jugador
-    public static boolean esRespuestaCorrecta(int respuestaUsuario, int resultado){
+    public static boolean esRespuestaCorrecta(int respuestaUsuario, int resultado) {
         return respuestaUsuario == resultado;
     }
 
-    // Calculo del tiempo final del jugador y aplicar la penalizacion en caso de fallo
-    public static long tiempoFinal(long tiempoActual, boolean esCorrecta){
-        if(!esCorrecta){
+    // Calculo del tiempo final del jugador y aplicar la penalizacion en caso de
+    // fallo
+    public static long tiempoFinal(long tiempoActual, boolean esCorrecta) {
+        if (!esCorrecta) {
             long tiempoFinal = tiempoActual + 20;
             return tiempoFinal;
         }
@@ -180,44 +181,44 @@ public static boolean contieneSoloLetras(String texto) {
     }
 
     // Ganador de la prueba Calculadora Mental
-    public static int ganadorCalculadora(long tiempoJ1, long tiempoJ2){
+    public static int ganadorCalculadora(long tiempoJ1, long tiempoJ2) {
         int ganador;
-        if(tiempoJ1 < tiempoJ2){
+        if (tiempoJ1 < tiempoJ2) {
             ganador = 1;
             return ganador;
-        }else if(tiempoJ2 < tiempoJ1){
+        } else if (tiempoJ2 < tiempoJ1) {
             ganador = 2;
             return ganador;
-        }else{
-            //En caso de empate
+        } else {
+            // En caso de empate
             ganador = 0;
             return ganador;
         }
     }
 
-    public static void actualizarMarcardorGlobal(int ganador){
-        if(ganador == 1){
-            puntosTotalesJ1 ++;
-        }else if(ganador == 2){
-            puntosTotalesJ2 ++;
+    public static void actualizarMarcardorGlobal(int ganador) {
+        if (ganador == 1) {
+            puntosTotalesJ1++;
+        } else if (ganador == 2) {
+            puntosTotalesJ2++;
         }
         // Si es empate nadie suma punto
     }
 
     /**
      * Cronus Rumanus
-     * @author David 
+     * @author David
      * @version 1.0
      * En esta prueba se mostrara un numero desde 1 hata el 3999 en romano y el jugador tendra que adivinar la mayor cantidad posible
-     * de numeros en un minuto. 
+     * de numeros en un minuto.
      */
-    //Geerar un numero romano entre 1 y 3999
-    public static int generarNumeroRomano(){
-        int romano = rd.nextInt(1,4000);
+    // Geerar un numero romano entre 1 y 3999
+    public static int generarNumeroRomano() {
+        int romano = rd.nextInt(1, 4000);
         return romano;
     }
 
-    public static String convertirARomano(int numero){
+    public static String convertirARomano(int numero) {
         int unidades = numero % 10;
         int decenas = (numero / 10) % 10;
         int centenas = (numero / 100) % 10;
@@ -226,67 +227,127 @@ public static boolean contieneSoloLetras(String texto) {
         String romanoMillares = "";
         romanoMillares.toUpperCase();
         switch (millares) {
-            case 1: romanoMillares = "M"; break;
-            case 2: romanoMillares = "MM"; break;
-            case 3: romanoMillares = "MMM"; break;
+            case 1:
+                romanoMillares = "M";
+                break;
+            case 2:
+                romanoMillares = "MM";
+                break;
+            case 3:
+                romanoMillares = "MMM";
+                break;
         }
 
         String romanoCentenas = "";
         romanoCentenas.toUpperCase();
         switch (centenas) {
-            case 1: romanoCentenas = "C"; break;
-            case 2: romanoCentenas = "CC"; break;
-            case 3: romanoCentenas = "CCC"; break;
-            case 4: romanoCentenas = "CD"; break;
-            case 5: romanoCentenas = "D"; break;
-            case 6: romanoCentenas = "DC"; break;
-            case 7: romanoCentenas = "DCC"; break;
-            case 8: romanoCentenas = "DCCC"; break;
-            case 9: romanoCentenas = "CM"; break;
+            case 1:
+                romanoCentenas = "C";
+                break;
+            case 2:
+                romanoCentenas = "CC";
+                break;
+            case 3:
+                romanoCentenas = "CCC";
+                break;
+            case 4:
+                romanoCentenas = "CD";
+                break;
+            case 5:
+                romanoCentenas = "D";
+                break;
+            case 6:
+                romanoCentenas = "DC";
+                break;
+            case 7:
+                romanoCentenas = "DCC";
+                break;
+            case 8:
+                romanoCentenas = "DCCC";
+                break;
+            case 9:
+                romanoCentenas = "CM";
+                break;
         }
 
         String romanoDecenas = "";
         romanoDecenas.toUpperCase();
         switch (decenas) {
-            case 1: romanoDecenas = "X"; break;
-            case 2: romanoDecenas = "XX"; break;
-            case 3: romanoDecenas = "XXX"; break;
-            case 4: romanoDecenas = "XL"; break;
-            case 5: romanoDecenas = "L"; break;
-            case 6: romanoDecenas = "LX"; break;
-            case 7: romanoDecenas = "LXX"; break;
-            case 8: romanoDecenas = "LXXX"; break;
-            case 9: romanoDecenas = "XC"; break;
+            case 1:
+                romanoDecenas = "X";
+                break;
+            case 2:
+                romanoDecenas = "XX";
+                break;
+            case 3:
+                romanoDecenas = "XXX";
+                break;
+            case 4:
+                romanoDecenas = "XL";
+                break;
+            case 5:
+                romanoDecenas = "L";
+                break;
+            case 6:
+                romanoDecenas = "LX";
+                break;
+            case 7:
+                romanoDecenas = "LXX";
+                break;
+            case 8:
+                romanoDecenas = "LXXX";
+                break;
+            case 9:
+                romanoDecenas = "XC";
+                break;
         }
 
         String romanoUnidades = "";
         romanoUnidades.toUpperCase();
         switch (unidades) {
-            case 1: romanoUnidades = "I"; break;
-            case 2: romanoUnidades = "II"; break;
-            case 3: romanoUnidades = "III"; break;
-            case 4: romanoUnidades = "IV"; break;
-            case 5: romanoUnidades = "V"; break;
-            case 6: romanoUnidades = "VI"; break;
-            case 7: romanoUnidades = "VII"; break;
-            case 8: romanoUnidades = "VIII"; break;
-            case 9: romanoUnidades = "IX"; break;
+            case 1:
+                romanoUnidades = "I";
+                break;
+            case 2:
+                romanoUnidades = "II";
+                break;
+            case 3:
+                romanoUnidades = "III";
+                break;
+            case 4:
+                romanoUnidades = "IV";
+                break;
+            case 5:
+                romanoUnidades = "V";
+                break;
+            case 6:
+                romanoUnidades = "VI";
+                break;
+            case 7:
+                romanoUnidades = "VII";
+                break;
+            case 8:
+                romanoUnidades = "VIII";
+                break;
+            case 9:
+                romanoUnidades = "IX";
+                break;
         }
 
         return romanoMillares + romanoCentenas + romanoDecenas + romanoUnidades;
     }
 
     // Ganador de Conus Rumanus
-    public static int ganadorCronusRuma(int aciertosJ1, int aciertosJ2){
+    public static int ganadorCronusRuma(int aciertosJ1, int aciertosJ2) {
         int ganador;
-        if(aciertosJ1 > aciertosJ2){
+        if (aciertosJ1 > aciertosJ2) {
             ganador = 1;
             return ganador;
-        }else if(aciertosJ2 > aciertosJ1){
+        } else if (aciertosJ2 > aciertosJ1) {
             ganador = 2;
             return ganador;
-        }else{
-            //En caso de empate
+        } else {
+            // En caso de empate
             ganador = 0;
             return ganador;
         }
@@ -295,9 +356,9 @@ public static boolean contieneSoloLetras(String texto) {
     /**
      * Sistema de puntuacion de las preubas matematicas y decision del ganador del juego
      * @author David Espejo Piñero
-     * @version 2.0 
-    */
-    
+     * @version 2.0
+     */
+
     // Sistema de puntuacion de la Cifra Exacta
     public static int calcularPuntosCifraExacta(int diferencia) {
         if (diferencia == 0) {
@@ -322,12 +383,21 @@ public static boolean contieneSoloLetras(String texto) {
     public static int calcularPuntosCronusRomanus(int aciertosJugador) {
         return aciertosJugador;
     }
-    
-    //Actualizador del marcador global de los jugadores 
-    public static void actualizarMarcardorGlobal(int puntosPruebaJ1, int puntosPruebaJ2){
+
+    // Actualizador del marcador global de los jugadores
+    public static void actualizarMarcardorGlobal(int puntosPruebaJ1, int puntosPruebaJ2) {
         puntosTotalesJ1 += puntosPruebaJ1;
         puntosTotalesJ2 += puntosPruebaJ2;
     }
+
+    //Ganador del concuros
+    public static int ganadorConcurso(int puntosTotalesJ1, int puntosTotalesJ2){
+        if(puntosTotalesJ1 > puntosTotalesJ2){
+            return 1;
+        }else if(puntosTotalesJ2 > puntosTotalesJ1){
+            return 2;
+        }else{
+            return 0;
+        }
+    }
 }
-
-

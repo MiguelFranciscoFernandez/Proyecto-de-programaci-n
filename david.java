@@ -256,4 +256,15 @@ public class david {
         puntosTotalesJ1 += puntosPruebaJ1;
         puntosTotalesJ2 += puntosPruebaJ2;
     }
+
+    //Ganador del concuros
+    public static int ganadorConcurso(int puntosTotalesJ1, int puntosTotalesJ2){
+        if(puntosTotalesJ1 > puntosTotalesJ2){
+            return 1;
+        }else if(puntosTotalesJ2 > puntosTotalesJ1){
+            return 2;
+        }else{
+            return 0;
+        }
+    }
 }
