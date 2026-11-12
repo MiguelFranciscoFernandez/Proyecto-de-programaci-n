@@ -26,7 +26,7 @@ public class interfaz {
         do {
             System.out.print("Selecciona una opción: ");
             try {
-                opcion = Integer.parseInt(Main.sc.nextLine().trim());
+                opcion = Integer.parseInt(Main.sc.nextLine());
                 if (opcion >= min && opcion <= max) {
                     correcta = true;
                 } else {
