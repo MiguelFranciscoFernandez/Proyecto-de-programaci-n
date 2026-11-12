@@ -7,6 +7,7 @@ public class lógica {
     static int cantidadLetras = 10;
     static int puntosTotalesJ1 = 0;
     static int puntosTotalesJ2 = 0;
+    static int segundosMaximos = 300;
 
     public static String generarLetras() {
         String vocales = "AEIOU";

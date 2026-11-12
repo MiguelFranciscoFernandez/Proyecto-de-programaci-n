@@ -8,7 +8,6 @@
 
 public class interfaz {
 
-
     public static void mostrarBienvenida() {
         System.out.println("Bienvenido a la prueba 'La palabra más larga'.");
         System.out.println("Dos jugadores competirán para formar la palabra más larga posible.");
@@ -20,6 +19,8 @@ public class interfaz {
         System.out.println("2. La palabra debe ser válida y contener solo las letras proporcionadas.");
         System.out.println("3. El jugador con la palabra más larga gana la ronda.");
     }
+
+    // --- Palabra más larga ---
 
     // Letras disponibles para la prueba
     public static void mostrarLetras(String letras) {
@@ -53,7 +54,12 @@ public class interfaz {
         return palabra;
     }
 
-// Resultado Final
+    public static void mostrarResultado(int jugador, String palabra) {
+        System.out.println("Jugador " + jugador + ", tu palabra es: " + palabra);
+        System.out.println("Longitud: " + palabra.length() + " letras");
+    }
+
+    // Resultado Final
     public static void mostrarResultadoFinal(int jugador1, int jugador2, int ganador) {
         System.out.println("\n===== RESULTADO FINAL =====");
         System.out.println("Jugador 1: " + jugador1 + " letras");
@@ -97,4 +103,253 @@ public class interfaz {
         return ganador;
     }
 
+    // ---------- LA CIFRA EXACTA ----------
+
+    public static void mostrarBienvenidaCifraExacta() {
+        System.out.println("Bienvenido a la prueba 'La cifra exacta'.");
+        System.out.println("Dos jugadores competirán para acercarse lo máximo posible a un número objetivo.");
+    }
+
+    public static void mostrarInstruccionesCifraExacta() {
+        System.out.println("\n===== LA CIFRA EXACTA =====");
+        System.out.println("Instrucciones:");
+        System.out.println("1. Debes acercarte lo máximo posible al número objetivo.");
+        System.out.println("2. Tienes " + "OPERACIONES_CIFRA" + " operaciones: + - * /");
+        System.out.println("3. En la primera operación eliges dos números de los disponibles.");
+        System.out.println("4. En las siguientes usas el resultado anterior y un número disponible.");
+        System.out.println("5. Puedes repetir un mismo número disponible las veces que quieras.");
+        System.out.println("6. Las divisiones deben ser exactas y no se puede dividir entre cero.");
+    }
+
+    // Número objetivo y números disponibles
+    public static void mostrarCifraExacta(int objetivo, String auxiliares) {
+        System.out.println("\nNúmero objetivo: " + objetivo);
+        System.out.println("Números disponibles: " + auxiliares.replace(",", "  "));
+        System.out.println();
+    }
+
+    public static void mostrarOperacionCifraExacta(int numeroOperacion, int cantidadOperaciones, int numeroActual,
+            char operador, int valor) {
+        System.out.println("\nOperación " + numeroOperacion + " de " + cantidadOperaciones);
+        System.out.print(numeroActual + " " + operador + " " + valor + " = ");
+    }
+
+    public static int pedirResultadoCifraExacta(int numeroOperacion, int cantidadOperaciones, int numeroActual,
+            char operador, int valor) {
+        int resultado = 0;
+        boolean correcto = false;
+
+        do {
+            System.out.print("Introduce tu resultado: ");
+            String input = Main.sc.nextLine().trim();
+            try {
+                resultado = Integer.parseInt(input);
+                correcto = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Error: introduce un número válido.");
+            }
+        } while (!correcto);
+
+        return resultado;
+    }
+
+    public static void mostrarResultadoCifraExacta(int jugador, int resultadoFinal, int objetivo) {
+        System.out.println("\n===== RESULTADO JUGADOR " + jugador + " =====");
+        System.out.println("Resultado final: " + resultadoFinal);
+        System.out.println("Número objetivo: " + objetivo);
+        int diferencia = Math.abs(resultadoFinal - objetivo);
+        System.out.println("Diferencia: " + diferencia);
+    }
+    public static void mostrarGanadorCifraExacta(int jugador1, int jugador2) {
+        System.out.println("\n===== RESULTADO FINAL =====");
+        System.out.println("Jugador 1: " + jugador1 + " puntos");
+        System.out.println("Jugador 2: " + jugador2 + " puntos");
+        if (jugador1 > jugador2) {
+            System.out.println("Gana el jugador 1");
+        } else if (jugador2 > jugador1) {
+            System.out.println("Gana el jugador 2");
+        } else {
+            System.out.println("Empate entre Jugador 1 y Jugador 2.");
+        }
+    }
+
+    public static int pruebaCifraExacta(int objetivo, String auxiliares) {
+        int resultado = 0;
+        boolean correcto = false;
+
+        do {
+            System.out.print("Introduce tu resultado: ");
+            String input = Main.sc.nextLine().trim();
+            try {
+                resultado = Integer.parseInt(input);
+                correcto = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Error: introduce un número válido.");
+            }
+        } while (!correcto);
+
+        return resultado;
+    }
+
+    // ---------- LA CALCULADORA HUMANA ----------
+
+    public static void mostrarBienvenidaCalculadora() {
+        System.out.println("Bienvenido a la prueba 'La calculadora humana'.");
+        System.out.println("Dos jugadores competirán para resolver operaciones matemáticas de cabeza.");
+    }
+
+    public static void mostrarInstruccionesCalculadora(int cantidadOperaciones) {
+        System.out.println("\n===== LA CALCULADORA HUMANA =====");
+        System.out.println("Instrucciones:");
+        System.out.println("1. Cada jugador resuelve " + cantidadOperaciones + " operaciones de cabeza.");
+        System.out.println("2. El resultado correcto es el número de partida de la siguiente operación,");
+        System.out.println("   aunque hayas fallado.");
+        System.out.println("3. Gana quien termine en menos tiempo.");
+        System.out.println("4. Cada respuesta incorrecta suma 20 segundos de penalización.");
+    }
+
+    // Operación que tiene que resolver el jugador
+    public static void mostrarOperacion(int numeroOperacion, int cantidadOperaciones, int numeroActual, char operador,
+            int valor) {
+        System.out.println("\nOperación " + numeroOperacion + " de " + cantidadOperaciones);
+        System.out.print(numeroActual + " " + operador + " " + valor + " = ");
+    }
+
+    public static int pedirResultado(int numeroOperacion, int cantidadOperaciones, int numeroActual, char operador,
+            int valor) {
+        int resultado = 0;
+        boolean correcto = false;
+
+        do {
+            System.out.print("Introduce tu resultado: ");
+            String input = Main.sc.nextLine().trim();
+            try {
+                resultado = Integer.parseInt(input);
+                correcto = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Error: introduce un número válido.");
+            }
+        } while (!correcto);
+        return resultado;
+    }
+
+    public static void mostrarResultadoCalculadora(int jugador, int tiempoTotal, int penalizacion) {
+        System.out.println("\n===== RESULTADO JUGADOR " + jugador + " =====");
+        System.out.println("Tiempo total: " + tiempoTotal + " segundos");
+        System.out.println("Penalización: " + penalizacion + " segundos");
+        System.out.println("Tiempo final: " + (tiempoTotal + penalizacion) + " segundos");
+    }
+
+    public static void mostrarGanadorCalculadora(int jugador1, int jugador2) {
+        System.out.println("\n===== RESULTADO FINAL =====");
+        System.out.println("Jugador 1: " + jugador1 + " segundos");
+        System.out.println("Jugador 2: " + jugador2 + " segundos");
+        if (jugador1 < jugador2) {
+            System.out.println("Gana el jugador 1");
+        } else if (jugador2 < jugador1) {
+            System.out.println("Gana el jugador 2");
+        } else {
+            System.out.println("Empate entre Jugador 1 y Jugador 2.");
+        }
+    }
+
+    public static int pruebaCalculadora(int numeroOperacion, int cantidadOperaciones, int numeroActual, char operador,
+            int valor) {
+        int resultado = 0;
+        boolean correcto = false;
+
+        do {
+            System.out.print("Introduce tu resultado: ");
+            String input = Main.sc.nextLine().trim();
+            try {
+                resultado = Integer.parseInt(input);
+                correcto = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Error: introduce un número válido.");
+            }
+        } while (!correcto);
+
+        return resultado;
+    }
+
+    // ---------- CRONUS RUMANUS ----------
+
+    public static void mostrarBienvenidaCronus() {
+        System.out.println("Bienvenido a la prueba 'Cronus Rumanus'.");
+        System.out.println("Dos jugadores competirán para convertir números romanos a cifras normales.");
+    }
+
+    public static void mostrarInstruccionesCronus() {
+        System.out.println("\n===== CRONUS RUMANUS =====");
+        System.out.println("Instrucciones:");
+        System.out.println("1. Se muestra un número romano (del 1 al 3999).");
+        System.out.println("2. Debes escribirlo en cifras normales.");
+        System.out.println("3. Tienes " + "SEGUNDOS_ROMANOS" + " segundos: gana quien acierte más.");
+    }
+
+    // Número romano que tiene que adivinar el jugador
+    public static void mostrarNumeroRomano(String romano) {
+        System.out.print("\n" + romano + " = ");
+    }
+
+    // Pedir la respuesta al jugador
+    public static int pedirRespuestaRomano() {
+        int respuesta = 0;
+        boolean correcta = false;
+        do {
+            String texto = Main.sc.nextLine().trim();
+            try {
+                respuesta = Integer.parseInt(texto);
+                correcta = true;
+            } catch (NumberFormatException e) {
+                System.out.print("Error: introduce un número válido: ");
+            }
+        } while (!correcta);
+        return respuesta;
+    }
+
+    public static void mostrarResultadoCronus(int jugador, int aciertos, int fallos) {
+        System.out.println("\n===== RESULTADO JUGADOR " + jugador + " =====");
+        System.out.println("Aciertos: " + aciertos);
+        System.out.println("Fallos: " + fallos);
+    }
+
+    public static void mostrarGanadorCronus(int jugador1, int jugador2) {
+        System.out.println("\n===== RESULTADO FINAL =====");
+        System.out.println("Jugador 1: " + jugador1 + " aciertos");
+        System.out.println("Jugador 2: " + jugador2 + " aciertos");
+        if (jugador1 > jugador2) {
+            System.out.println("Gana el jugador 1");
+        } else if (jugador2 > jugador1) {
+            System.out.println("Gana el jugador 2");
+        } else {
+            System.out.println("Empate entre Jugador 1 y Jugador 2.");
+        }
+    }
+
+    public static int pruebaCronus(String romano) {
+        int respuesta = 0;
+        boolean correcta = false;
+        do {
+            String texto = Main.sc.nextLine().trim();
+            try {
+                respuesta = Integer.parseInt(texto);
+                correcta = true;
+            } catch (NumberFormatException e) {
+                System.out.print("Error: introduce un número válido: ");
+            }
+        } while (!correcta);
+        return respuesta;
+    }
+
 }
+// Preguntar David
+/*    // Mostrar quién gana (o si hay empate)
+    public static void mostrarGanador(int ganador) {
+        if (ganador == 0) {
+            System.out.println("Empate.");
+        } else {
+            System.out.println("Gana el jugador " + ganador);
+        }
+    }
+ */
