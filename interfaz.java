@@ -8,6 +8,54 @@
 
 public class interfaz {
 
+    // Menu principal
+
+    public static int mostrarMenuPrincipal() {
+        System.out.println("\n===== CIFRAS Y LETRAS =====");
+        System.out.println("1. Modo concurso (todas las pruebas)");
+        System.out.println("2. Modo rápido (una sola prueba)");
+        System.out.println("3. Salir");
+        return pedirOpcion(1, 3);
+    }
+
+    // Pedir opción al usuario
+    public static int pedirOpcion(int min, int max) {
+        int opcion = 0;
+        boolean correcta = false;
+
+        do {
+            System.out.print("Selecciona una opción: ");
+            try {
+                opcion = Integer.parseInt(Main.sc.nextLine().trim());
+                if (opcion >= min && opcion <= max) {
+                    correcta = true;
+                } else {
+                    System.out.println("Opción no válida. Elige un número del " + min + " al " + max + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Opción no válida. Elige un número del " + min + " al " + max + ".");
+            }
+        } while (!correcta);
+
+        return opcion;
+    }
+
+    // Menu del modo rápido: devuelve 1-4 (prueba elegida) o 5 (volver)
+    public static int mostrarMenuModoRapido() {
+        System.out.println("\n===== MODO RÁPIDO =====");
+        System.out.println("Elige la prueba que quieres jugar:");
+        System.out.println("1. La palabra más larga");
+        System.out.println("2. La cifra exacta");
+        System.out.println("3. La calculadora humana");
+        System.out.println("4. Cronus Rumanus");
+        System.out.println("5. Volver al menú principal");
+        return pedirOpcion(1, 5);
+    }
+
+
+
+    // --- Palabra más larga ---
+
     public static void mostrarBienvenida() {
         System.out.println("Bienvenido a la prueba 'La palabra más larga'.");
         System.out.println("Dos jugadores competirán para formar la palabra más larga posible.");
@@ -19,8 +67,6 @@ public class interfaz {
         System.out.println("2. La palabra debe ser válida y contener solo las letras proporcionadas.");
         System.out.println("3. El jugador con la palabra más larga gana la ronda.");
     }
-
-    // --- Palabra más larga ---
 
     // Letras disponibles para la prueba
     public static void mostrarLetras(String letras) {
@@ -54,23 +100,6 @@ public class interfaz {
         return palabra;
     }
 
-    public static void mostrarResultado(int jugador, String palabra) {
-        System.out.println("Jugador " + jugador + ", tu palabra es: " + palabra);
-        System.out.println("Longitud: " + palabra.length() + " letras");
-    }
-
-    // Resultado Final
-    public static void mostrarResultadoFinal(int jugador1, int jugador2, int ganador) {
-        System.out.println("\n===== RESULTADO FINAL =====");
-        System.out.println("Jugador 1: " + jugador1 + " letras");
-        System.out.println("Jugador 2: " + jugador2 + " letras");
-        if (ganador == 0) {
-            System.out.println("Empate entre Jugador 1 y Jugador 2.");
-        } else {
-            System.out.println("Gana el jugador " + ganador);
-        }
-    }
-
     // Hacer funcionar la prueba de letras
     public static int ejecutarPruebaLetras(String letrasDisponibles) {
         int longitud1 = 0;
@@ -101,6 +130,18 @@ public class interfaz {
             System.out.println("Gana el jugador " + ganador);
         }
         return ganador;
+    }
+
+    // Resultado Final
+    public static void mostrarResultadoFinal(int jugador1, int jugador2, int ganador) {
+        System.out.println("\n===== RESULTADO FINAL =====");
+        System.out.println("Jugador 1: " + jugador1 + " letras");
+        System.out.println("Jugador 2: " + jugador2 + " letras");
+        if (ganador == 0) {
+            System.out.println("Empate entre Jugador 1 y Jugador 2.");
+        } else {
+            System.out.println("Gana el jugador " + ganador);
+        }
     }
 
     // ---------- LA CIFRA EXACTA ----------
@@ -153,26 +194,6 @@ public class interfaz {
         return resultado;
     }
 
-    public static void mostrarResultadoCifraExacta(int jugador, int resultadoFinal, int objetivo) {
-        System.out.println("\n===== RESULTADO JUGADOR " + jugador + " =====");
-        System.out.println("Resultado final: " + resultadoFinal);
-        System.out.println("Número objetivo: " + objetivo);
-        int diferencia = Math.abs(resultadoFinal - objetivo);
-        System.out.println("Diferencia: " + diferencia);
-    }
-    public static void mostrarGanadorCifraExacta(int jugador1, int jugador2) {
-        System.out.println("\n===== RESULTADO FINAL =====");
-        System.out.println("Jugador 1: " + jugador1 + " puntos");
-        System.out.println("Jugador 2: " + jugador2 + " puntos");
-        if (jugador1 > jugador2) {
-            System.out.println("Gana el jugador 1");
-        } else if (jugador2 > jugador1) {
-            System.out.println("Gana el jugador 2");
-        } else {
-            System.out.println("Empate entre Jugador 1 y Jugador 2.");
-        }
-    }
-
     public static int pruebaCifraExacta(int objetivo, String auxiliares) {
         int resultado = 0;
         boolean correcto = false;
@@ -189,6 +210,19 @@ public class interfaz {
         } while (!correcto);
 
         return resultado;
+    }
+
+    public static void mostrarGanadorCifraExacta(int jugador1, int jugador2) {
+        System.out.println("\n===== RESULTADO FINAL =====");
+        System.out.println("Jugador 1: " + jugador1 + " puntos");
+        System.out.println("Jugador 2: " + jugador2 + " puntos");
+        if (jugador1 > jugador2) {
+            System.out.println("Gana el jugador 1");
+        } else if (jugador2 > jugador1) {
+            System.out.println("Gana el jugador 2");
+        } else {
+            System.out.println("Empate entre Jugador 1 y Jugador 2.");
+        }
     }
 
     // ---------- LA CALCULADORA HUMANA ----------
@@ -233,26 +267,6 @@ public class interfaz {
         return resultado;
     }
 
-    public static void mostrarResultadoCalculadora(int jugador, int tiempoTotal, int penalizacion) {
-        System.out.println("\n===== RESULTADO JUGADOR " + jugador + " =====");
-        System.out.println("Tiempo total: " + tiempoTotal + " segundos");
-        System.out.println("Penalización: " + penalizacion + " segundos");
-        System.out.println("Tiempo final: " + (tiempoTotal + penalizacion) + " segundos");
-    }
-
-    public static void mostrarGanadorCalculadora(int jugador1, int jugador2) {
-        System.out.println("\n===== RESULTADO FINAL =====");
-        System.out.println("Jugador 1: " + jugador1 + " segundos");
-        System.out.println("Jugador 2: " + jugador2 + " segundos");
-        if (jugador1 < jugador2) {
-            System.out.println("Gana el jugador 1");
-        } else if (jugador2 < jugador1) {
-            System.out.println("Gana el jugador 2");
-        } else {
-            System.out.println("Empate entre Jugador 1 y Jugador 2.");
-        }
-    }
-
     public static int pruebaCalculadora(int numeroOperacion, int cantidadOperaciones, int numeroActual, char operador,
             int valor) {
         int resultado = 0;
@@ -270,6 +284,19 @@ public class interfaz {
         } while (!correcto);
 
         return resultado;
+    }
+
+    public static void mostrarGanadorCalculadora(int jugador1, int jugador2) {
+        System.out.println("\n===== RESULTADO FINAL =====");
+        System.out.println("Jugador 1: " + jugador1 + " segundos");
+        System.out.println("Jugador 2: " + jugador2 + " segundos");
+        if (jugador1 < jugador2) {
+            System.out.println("Gana el jugador 1");
+        } else if (jugador2 < jugador1) {
+            System.out.println("Gana el jugador 2");
+        } else {
+            System.out.println("Empate entre Jugador 1 y Jugador 2.");
+        }
     }
 
     // ---------- CRONUS RUMANUS ----------
@@ -308,25 +335,6 @@ public class interfaz {
         return respuesta;
     }
 
-    public static void mostrarResultadoCronus(int jugador, int aciertos, int fallos) {
-        System.out.println("\n===== RESULTADO JUGADOR " + jugador + " =====");
-        System.out.println("Aciertos: " + aciertos);
-        System.out.println("Fallos: " + fallos);
-    }
-
-    public static void mostrarGanadorCronus(int jugador1, int jugador2) {
-        System.out.println("\n===== RESULTADO FINAL =====");
-        System.out.println("Jugador 1: " + jugador1 + " aciertos");
-        System.out.println("Jugador 2: " + jugador2 + " aciertos");
-        if (jugador1 > jugador2) {
-            System.out.println("Gana el jugador 1");
-        } else if (jugador2 > jugador1) {
-            System.out.println("Gana el jugador 2");
-        } else {
-            System.out.println("Empate entre Jugador 1 y Jugador 2.");
-        }
-    }
-
     public static int pruebaCronus(String romano) {
         int respuesta = 0;
         boolean correcta = false;
@@ -342,14 +350,51 @@ public class interfaz {
         return respuesta;
     }
 
-}
-// Preguntar David
-/*    // Mostrar quién gana (o si hay empate)
-    public static void mostrarGanador(int ganador) {
-        if (ganador == 0) {
-            System.out.println("Empate.");
+    public static void mostrarGanadorCronus(int jugador1, int jugador2) {
+        System.out.println("\n===== RESULTADO FINAL =====");
+        System.out.println("Jugador 1: " + jugador1 + " aciertos");
+        System.out.println("Jugador 2: " + jugador2 + " aciertos");
+        if (jugador1 > jugador2) {
+            System.out.println("Gana el jugador 1");
+        } else if (jugador2 > jugador1) {
+            System.out.println("Gana el jugador 2");
         } else {
-            System.out.println("Gana el jugador " + ganador);
+            System.out.println("Empate entre Jugador 1 y Jugador 2.");
         }
     }
- */
+
+    // ---------- MARCADORES Y RESULTADOS DEL CONCURSO ----------
+
+    // Marcador de la prueba que se está disputando
+    public static void mostrarMarcadorPrueba(int puntosJ1, int puntosJ2) {
+        System.out.println("--- Marcador de la prueba ---");
+        System.out.println("Jugador 1: " + puntosJ1 + " puntos");
+        System.out.println("Jugador 2: " + puntosJ2 + " puntos");
+    }
+
+    // Ganador de una prueba (0 = empate)
+    public static void mostrarGanadorPrueba(int ganador) {
+        if (ganador == 0) {
+            System.out.println("La prueba termina en empate: nadie suma punto global.");
+        } else {
+            System.out.println("El jugador " + ganador + " gana la prueba y suma 1 punto global.");
+        }
+    }
+
+    // Marcador global del concurso
+    public static void mostrarMarcadorGlobal(int puntosJ1, int puntosJ2) {
+        System.out.println("--- Marcador global ---");
+        System.out.println("Jugador 1: " + puntosJ1 + " puntos");
+        System.out.println("Jugador 2: " + puntosJ2 + " puntos");
+    }
+
+    // Ganador final del concurso (0 = empate)
+    public static void mostrarGanadorConcurso(int ganador) {
+        System.out.println("---- FIN DEL CONCURSO ----");
+        if (ganador == 0) {
+            System.out.println("El concurso termina en empate.");
+        } else {
+            System.out.println("¡El jugador " + ganador + " gana el concurso!");
+        }
+    }
+}
