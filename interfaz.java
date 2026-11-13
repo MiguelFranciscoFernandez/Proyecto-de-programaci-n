@@ -390,67 +390,6 @@ public class interfaz {
 
     // ---------- FLUJO DE PRUEBAS Y MODOS DE JUEGO ----------
 
-    // Jugar prueba 1: La palabra más larga
-    public static int jugarPalabraMasLarga() {
-        mostrarBienvenida();
-        mostrarInstrucciones();
-        String letras = lógica.generarLetras();
-        mostrarLetras(letras);
-        int ganador = ejecutarPruebaLetras(letras);
-        return ganador;
-    }
-
-    // Jugar prueba 2: La cifra exacta
-    public static int jugarCifraExacta() {
-        mostrarBienvenidaCifraExacta();
-        mostrarInstruccionesCifraExacta();
-
-        int objetivo = lógica.generarNumeroAleatorio();
-        String auxiliares = lógica.generarNumerosAuxiliares();
-        mostrarCifraExacta(objetivo, auxiliares);
-
-        System.out.println("Jugador 1:");
-        int resultadoJ1 = pruebaCifraExacta(objetivo, auxiliares);
-
-        System.out.println("Jugador 2:");
-        int resultadoJ2 = pruebaCifraExacta(objetivo, auxiliares);
-
-        int diferenciaJ1 = lógica.calculoDiferencial(objetivo, resultadoJ1);
-        int diferenciaJ2 = lógica.calculoDiferencial(objetivo, resultadoJ2);
-
-        int puntosJ1 = lógica.calcularPuntosCifraExacta(diferenciaJ1);
-        int puntosJ2 = lógica.calcularPuntosCifraExacta(diferenciaJ2);
-
-        mostrarGanadorCifraExacta(puntosJ1, puntosJ2);
-
-        int ganador = lógica.ganadorCifraExacta(objetivo, resultadoJ1, resultadoJ2);
-        return ganador;
-    }
-
-    // Jugar prueba 3: La calculadora humana
-    public static int jugarCalculadoraHumana() {
-        mostrarBienvenidaCalculadora();
-        int totalOperaciones = 5;
-        mostrarInstruccionesCalculadora(totalOperaciones);
-
-        long tiempoJ1 = jugarTurnoCalculadora(1, totalOperaciones);
-        long tiempoJ2 = jugarTurnoCalculadora(2, totalOperaciones);
-
-        mostrarGanadorCalculadora((int) tiempoJ1, (int) tiempoJ2);
-
-        int ganador = lógica.ganadorCalculadora(tiempoJ1, tiempoJ2);
-        mostrarGanadorPrueba(ganador);
-        int puntosJ1 = lógica.calcularPuntosIndividualCalculadora(tiempoJ1);
-        int puntosJ2 = lógica.calcularPuntosIndividualCalculadora(tiempoJ2);
-        mostrarMarcadorPrueba(puntosJ1, puntosJ2);
-
-        // Sumar al marcador global
-        Main.puntosTotalesJ1 += puntosJ1;
-        Main.puntosTotalesJ2 += puntosJ2;
-
-        return ganador;
-    }
-
     public static long jugarTurnoCalculadora(int jugador, int totalOperaciones) {
         System.out.println("\n--- Turno del Jugador " + jugador + " ---");
         System.out.print("Pulsa ENTER para iniciar el cronómetro...");
@@ -494,31 +433,6 @@ public class interfaz {
         return tiempoFinal;
     }
 
-    // Jugar prueba 4: Cronus Rumanus
-    public static int jugarCronusRumanus() {
-        mostrarBienvenidaCronus();
-        mostrarInstruccionesCronus();
-
-        int preguntasPorJugador = 3;
-        int aciertosJ1 = jugarTurnoCronus(1, preguntasPorJugador);
-        int aciertosJ2 = jugarTurnoCronus(2, preguntasPorJugador);
-
-        mostrarGanadorCronus(aciertosJ1, aciertosJ2);
-
-        int ganador = lógica.ganadorCronusRuma(aciertosJ1, aciertosJ2);
-        mostrarGanadorPrueba(ganador);
-
-        // Puntos en funcion de los aciertos de numeros romanos
-        int puntosJ1 = lógica.calcularPuntosCronusRomanus(aciertosJ1);
-        int puntosJ2 = lógica.calcularPuntosCronusRomanus(aciertosJ2);
-        mostrarMarcadorPrueba(puntosJ1, puntosJ2);
-
-        // Sumar al marcador global
-        Main.puntosTotalesJ1 += puntosJ1;
-        Main.puntosTotalesJ2 += puntosJ2;
-
-        return ganador;
-    }
 
     public static int jugarTurnoCronus(int jugador, int cantidadPreguntas) {
         System.out.println("\n--- Turno del Jugador " + jugador + " ---");
@@ -546,7 +460,7 @@ public class interfaz {
     }
 
 
-    // Modo Concurso: juega las 4 pruebas seguidas
+    // Modo Concurso
     public static void jugarModoConcurso() {
         System.out.println("\n==================================================");
         System.out.println("          ¡COMIENZA EL MODO CONCURSO!             ");
@@ -557,24 +471,24 @@ public class interfaz {
 
         // 1. La palabra más larga
         System.out.println("\n>>> PRUEBA 1: LA PALABRA MÁS LARGA <<<");
-        int ganadorLetras = jugarPalabraMasLarga();
+        int ganadorLetras = lógica.jugarPalabraMasLarga();
         lógica.actualizarPuntuacion(ganadorLetras);
         mostrarMarcadorGlobal(Main.puntosTotalesJ1, Main.puntosTotalesJ2);
 
         // 2. La cifra exacta
         System.out.println("\n>>> PRUEBA 2: LA CIFRA EXACTA <<<");
-        int ganadorCifra = jugarCifraExacta();
+        int ganadorCifra = lógica.jugarCifraExacta();
         lógica.actualizarPuntuacion(ganadorCifra);
         mostrarMarcadorGlobal(Main.puntosTotalesJ1, Main.puntosTotalesJ2);
 
         // 3. La calculadora humana
         System.out.println("\n>>> PRUEBA 3: LA CALCULADORA HUMANA <<<");
-        jugarCalculadoraHumana();
+        lógica.jugarCalculadoraHumana();
         mostrarMarcadorGlobal(Main.puntosTotalesJ1, Main.puntosTotalesJ2);
 
         // 4. Cronus Rumanus
         System.out.println("\n>>> PRUEBA 4: CRONUS RUMANUS <<<");
-        jugarCronusRumanus();
+        lógica.jugarCronusRumanus();
         mostrarMarcadorGlobal(Main.puntosTotalesJ1, Main.puntosTotalesJ2);
 
         // Ganador final del concurso
@@ -582,7 +496,7 @@ public class interfaz {
         mostrarGanadorConcurso(ganadorFinal);
     }
 
-    // Modo Rápido: juega una sola prueba elegida al azar
+    // Modo Rápido: se juega una sola prueba elegida al azar
     public static void jugarModoRapido() {
         System.out.println("\n==================================================");
         System.out.println("           MODO RÁPIDO: PRUEBA AL AZAR            ");
@@ -593,19 +507,19 @@ public class interfaz {
         switch (prueba) {
             case 1:
                 System.out.println("La prueba seleccionada al azar es: ¡La palabra más larga!");
-                jugarPalabraMasLarga();
+                lógica.jugarPalabraMasLarga();
                 break;
             case 2:
                 System.out.println("La prueba seleccionada al azar es: ¡La cifra exacta!");
-                jugarCifraExacta();
+                lógica.jugarCifraExacta();
                 break;
             case 3:
                 System.out.println("La prueba seleccionada al azar es: ¡La calculadora humana!");
-                jugarCalculadoraHumana();
+                lógica.jugarCalculadoraHumana();
                 break;
             case 4:
                 System.out.println("La prueba seleccionada al azar es: ¡Cronus Rumanus!");
-                jugarCronusRumanus();
+                lógica.jugarCronusRumanus();
                 break;
         }
     }

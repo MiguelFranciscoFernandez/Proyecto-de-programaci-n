@@ -14,6 +14,16 @@ public class lógica {
         return rd.nextInt(1, 5); 
     }
 
+    // Funcion para que se pueda jugar a la letra mas larga
+    public static int jugarPalabraMasLarga() {
+        interfaz.mostrarBienvenida();
+        interfaz.mostrarInstrucciones();
+        String letras = generarLetras();
+        interfaz.mostrarLetras(letras);
+        int ganador = interfaz.ejecutarPruebaLetras(letras);
+        return ganador;
+    }
+
     public static String generarLetras() {
         String vocales = "AEIOU";
         String consonantes = "BCDFGHJKLMNÑPQRSTVWXYZ";
@@ -119,6 +129,26 @@ public class lógica {
         return validador;
     }
 
+    // Funcion para que se pueda jugar la Cifra Exacta
+    public static int jugarCifraExacta() {
+        interfaz.mostrarBienvenidaCifraExacta();
+        interfaz.mostrarInstruccionesCifraExacta();
+        int objetivo = generarNumeroAleatorio();
+        String auxiliares = generarNumerosAuxiliares();
+        interfaz.mostrarCifraExacta(objetivo, auxiliares);
+        System.out.println("Jugador 1:");
+        int resultadoJ1 = interfaz.pruebaCifraExacta(objetivo, auxiliares);
+        System.out.println("Jugador 2:");
+        int resultadoJ2 = interfaz.pruebaCifraExacta(objetivo, auxiliares);
+        int diferenciaJ1 = calculoDiferencial(objetivo, resultadoJ1);
+        int diferenciaJ2 = calculoDiferencial(objetivo, resultadoJ2);
+        int puntosJ1 = calcularPuntosCifraExacta(diferenciaJ1);
+        int puntosJ2 = calcularPuntosCifraExacta(diferenciaJ2);
+        interfaz.mostrarGanadorCifraExacta(puntosJ1, puntosJ2);
+        int ganador = ganadorCifraExacta(objetivo, resultadoJ1, resultadoJ2);
+        return ganador;
+    }
+
     // Calculo entre la respuesta de los jugadores y el resultado final
     public static int calculoDiferencial(int objetivo, int resultado) {
         return Math.abs(objetivo - resultado);
@@ -159,6 +189,30 @@ public class lógica {
             numero = rd.nextInt(1, 10);
             return numero;
         }
+    }
+
+    // Funcion para que se pueda jugar a la Calculadora Humana
+    public static int jugarCalculadoraHumana() {
+        interfaz.mostrarBienvenidaCalculadora();
+        int totalOperaciones = 5;
+        interfaz.mostrarInstruccionesCalculadora(totalOperaciones);
+
+        long tiempoJ1 = interfaz.jugarTurnoCalculadora(1, totalOperaciones);
+        long tiempoJ2 = interfaz.jugarTurnoCalculadora(2, totalOperaciones);
+
+        interfaz.mostrarGanadorCalculadora((int) tiempoJ1, (int) tiempoJ2);
+
+        int ganador = lógica.ganadorCalculadora(tiempoJ1, tiempoJ2);
+        interfaz.mostrarGanadorPrueba(ganador);
+        int puntosJ1 = lógica.calcularPuntosIndividualCalculadora(tiempoJ1);
+        int puntosJ2 = lógica.calcularPuntosIndividualCalculadora(tiempoJ2);
+        interfaz.mostrarMarcadorPrueba(puntosJ1, puntosJ2);
+
+        // Sumar al marcador global
+        Main.puntosTotalesJ1 += puntosJ1;
+        Main.puntosTotalesJ2 += puntosJ2;
+
+        return ganador;
     }
 
     // Inicio y continuacion de los diferentes resultados matematico
@@ -233,6 +287,31 @@ public class lógica {
     public static int generarNumeroRomano() {
         int romano = rd.nextInt(1, 4000);
         return romano;
+    }
+
+    // Funcion para que se pueda jugar Cronus Rumanus
+    public static int jugarCronusRumanus() {
+        interfaz.mostrarBienvenidaCronus();
+        interfaz.mostrarInstruccionesCronus();
+        int preguntasPorJugador = 3;
+        int aciertosJ1 = interfaz.jugarTurnoCronus(1, preguntasPorJugador);
+        int aciertosJ2 = interfaz.jugarTurnoCronus(2, preguntasPorJugador);
+
+        interfaz.mostrarGanadorCronus(aciertosJ1, aciertosJ2);
+
+        int ganador = lógica.ganadorCronusRuma(aciertosJ1, aciertosJ2);
+        interfaz.mostrarGanadorPrueba(ganador);
+
+        // Puntos en funcion de los aciertos de numeros romanos
+        int puntosJ1 = lógica.calcularPuntosCronusRomanus(aciertosJ1);
+        int puntosJ2 = lógica.calcularPuntosCronusRomanus(aciertosJ2);
+        interfaz.mostrarMarcadorPrueba(puntosJ1, puntosJ2);
+
+        // Sumar al marcador global
+        Main.puntosTotalesJ1 += puntosJ1;
+        Main.puntosTotalesJ2 += puntosJ2;
+
+        return ganador;
     }
 
     public static String convertirARomano(int numero) {
@@ -353,6 +432,7 @@ public class lógica {
 
         return romanoMillares + romanoCentenas + romanoDecenas + romanoUnidades;
     }
+
 
     // Ganador de Conus Rumanus
     public static int ganadorCronusRuma(int aciertosJ1, int aciertosJ2) {
