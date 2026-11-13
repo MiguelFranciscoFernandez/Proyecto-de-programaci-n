@@ -1,4 +1,4 @@
-# Proyecto-de-programaci-n
+# Proyecto-de-programacion
 Proyecto de programación en Java: Cifras y Letras
 Creado y programado por David Espejo Piñero y Miguel Francisco
 El programa contas de 3 pruebas simulando al programa de la RTVE Cifras y Letras y una nueva inventada por nosotros.
