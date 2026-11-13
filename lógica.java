@@ -14,16 +14,6 @@ public class lógica {
         return rd.nextInt(1, 5); 
     }
 
-    // Funcion para que se pueda jugar a la letra mas larga
-    public static int jugarPalabraMasLarga() {
-        interfaz.mostrarBienvenida();
-        interfaz.mostrarInstrucciones();
-        String letras = generarLetras();
-        interfaz.mostrarLetras(letras);
-        int ganador = interfaz.ejecutarPruebaLetras(letras);
-        return ganador;
-    }
-
     public static String generarLetras() {
         String vocales = "AEIOU";
         String consonantes = "BCDFGHJKLMNÑPQRSTVWXYZ";
@@ -65,17 +55,18 @@ public class lógica {
         return true;
     }
 
-    public static int ganadorLetras(int longitudJ1, int longitudJ2) {
-        if (longitudJ1 > longitudJ2) {
-            return 1;
-        } else if (longitudJ2 > longitudJ1) {
-            return 2;
-        } else {
-            return 0;
-        }
+    
+    // Funcion para que se pueda jugar a la letra mas larga
+    public static int jugarPalabraMasLarga() {
+        interfaz.mostrarBienvenida();
+        interfaz.mostrarInstrucciones();
+        String letras = generarLetras();
+        interfaz.mostrarLetras(letras);
+        int ganador = interfaz.ejecutarPruebaLetras(letras);
+        return ganador;
     }
 
-    public static boolean contieneSoloLetras(String texto) {
+        public static boolean contieneSoloLetras(String texto) {
         if (texto.length() == 0) {
             return false;
         }
@@ -85,6 +76,16 @@ public class lógica {
             }
         }
         return true;
+    }
+
+    public static int ganadorLetras(int longitudJ1, int longitudJ2) {
+        if (longitudJ1 > longitudJ2) {
+            return 1;
+        } else if (longitudJ2 > longitudJ1) {
+            return 2;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -451,7 +452,7 @@ public class lógica {
     }
 
     /**
-     * Sistema de puntuacion de las preubas matematicas y decision del ganador del juego
+     * Sistema de puntuacion de las pruebas matematicas y decision del ganador del juego
      * @author David Espejo Piñero
      * @version 2.0
      */
