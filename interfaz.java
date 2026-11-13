@@ -13,7 +13,7 @@ public class interfaz {
     public static int mostrarMenuPrincipal() {
         System.out.println("\n===== CIFRAS Y LETRAS =====");
         System.out.println("1. Modo concurso (todas las pruebas)");
-        System.out.println("2. Modo rápido (una sola prueba)");
+        System.out.println("2. Modo rápido (prueba al azar)");
         System.out.println("3. Salir");
         return pedirOpcion(1, 3);
     }
@@ -27,7 +27,7 @@ public class interfaz {
             System.out.print("Selecciona una opción: ");
             try {
                 opcion = Integer.parseInt(Main.sc.nextLine());
-                if (opcion >= min && opcion <= max) {
+                if ((opcion >= min && opcion <= max) || opcion == 0 || opcion == 99) {
                     correcta = true;
                 } else {
                     System.out.println("Opción no válida. Elige un número del " + min + " al " + max + ".");
@@ -386,6 +386,359 @@ public class interfaz {
         System.out.println("--- Marcador global ---");
         System.out.println("Jugador 1: " + puntosJ1 + " puntos");
         System.out.println("Jugador 2: " + puntosJ2 + " puntos");
+    }
+
+    // ---------- FLUJO DE PRUEBAS Y MODOS DE JUEGO ----------
+
+    // Jugar prueba 1: La palabra más larga
+    public static int jugarPalabraMasLarga() {
+        mostrarBienvenida();
+        mostrarInstrucciones();
+        String letras = lógica.generarLetras();
+        mostrarLetras(letras);
+        int ganador = ejecutarPruebaLetras(letras);
+        return ganador;
+    }
+
+    // Jugar prueba 2: La cifra exacta
+    public static int jugarCifraExacta() {
+        mostrarBienvenidaCifraExacta();
+        mostrarInstruccionesCifraExacta();
+
+        int objetivo = lógica.generarNumeroAleatorio();
+        String auxiliares = lógica.generarNumerosAuxiliares();
+        mostrarCifraExacta(objetivo, auxiliares);
+
+        System.out.println("Jugador 1:");
+        int resultadoJ1 = pruebaCifraExacta(objetivo, auxiliares);
+
+        System.out.println("Jugador 2:");
+        int resultadoJ2 = pruebaCifraExacta(objetivo, auxiliares);
+
+        int diferenciaJ1 = lógica.calculoDiferencial(objetivo, resultadoJ1);
+        int diferenciaJ2 = lógica.calculoDiferencial(objetivo, resultadoJ2);
+
+        int puntosJ1 = lógica.calcularPuntosCifraExacta(diferenciaJ1);
+        int puntosJ2 = lógica.calcularPuntosCifraExacta(diferenciaJ2);
+
+        mostrarGanadorCifraExacta(puntosJ1, puntosJ2);
+
+        int ganador = lógica.ganadorCifraExacta(objetivo, resultadoJ1, resultadoJ2);
+        return ganador;
+    }
+
+    // Jugar prueba 3: La calculadora humana
+    public static int jugarCalculadoraHumana() {
+        mostrarBienvenidaCalculadora();
+        int totalOperaciones = 5;
+        mostrarInstruccionesCalculadora(totalOperaciones);
+
+        long tiempoJ1 = jugarTurnoCalculadora(1, totalOperaciones);
+        long tiempoJ2 = jugarTurnoCalculadora(2, totalOperaciones);
+
+        mostrarGanadorCalculadora((int) tiempoJ1, (int) tiempoJ2);
+
+        int ganador = lógica.ganadorCalculadora(tiempoJ1, tiempoJ2);
+        mostrarGanadorPrueba(ganador);
+        int puntosJ1 = lógica.calcularPuntosIndividualCalculadora(tiempoJ1);
+        int puntosJ2 = lógica.calcularPuntosIndividualCalculadora(tiempoJ2);
+        mostrarMarcadorPrueba(puntosJ1, puntosJ2);
+
+        // Sumar al marcador global
+        Main.puntosTotalesJ1 += puntosJ1;
+        Main.puntosTotalesJ2 += puntosJ2;
+
+        return ganador;
+    }
+
+    public static long jugarTurnoCalculadora(int jugador, int totalOperaciones) {
+        System.out.println("\n--- Turno del Jugador " + jugador + " ---");
+        System.out.print("Pulsa ENTER para iniciar el cronómetro...");
+        Main.sc.nextLine();
+
+        long tiempoInicio = System.currentTimeMillis();
+        long penalizacion = 0;
+        int numeroActual = lógica.generarorAleatorioCalculadora();
+
+        for (int i = 1; i <= totalOperaciones; i++) {
+            char operador = '+';
+            if (i % 3 == 1) {
+                operador = '+';
+            } else if (i % 3 == 2) {
+                operador = '-';
+            } else {
+                operador = '*';
+            }
+
+            int valorSecundario = lógica.generadorSecundario(operador);
+            int resultadoCorrecto = lógica.calcularResultado(numeroActual, operador, valorSecundario);
+
+            mostrarOperacion(i, totalOperaciones, numeroActual, operador, valorSecundario);
+            int respuesta = pedirResultado(i, totalOperaciones, numeroActual, operador, valorSecundario);
+
+            boolean esCorrecta = lógica.esRespuestaCorrecta(respuesta, resultadoCorrecto);
+            if (esCorrecta) {
+                System.out.println("¡Correcto!");
+            } else {
+                System.out.println("¡Incorrecto! El resultado era " + resultadoCorrecto + " (+20s penalización).");
+                penalizacion = penalizacion + 20;
+            }
+            numeroActual = resultadoCorrecto;
+        }
+
+        long tiempoFin = System.currentTimeMillis();
+        long segundosTranscurridos = (tiempoFin - tiempoInicio) / 1000;
+        long tiempoFinal = segundosTranscurridos + penalizacion;
+
+        System.out.println("Tiempo: " + segundosTranscurridos + "s + " + penalizacion + "s (penalización) = " + tiempoFinal + "s totales.");
+        return tiempoFinal;
+    }
+
+    // Jugar prueba 4: Cronus Rumanus
+    public static int jugarCronusRumanus() {
+        mostrarBienvenidaCronus();
+        mostrarInstruccionesCronus();
+
+        int preguntasPorJugador = 3;
+        int aciertosJ1 = jugarTurnoCronus(1, preguntasPorJugador);
+        int aciertosJ2 = jugarTurnoCronus(2, preguntasPorJugador);
+
+        mostrarGanadorCronus(aciertosJ1, aciertosJ2);
+
+        int ganador = lógica.ganadorCronusRuma(aciertosJ1, aciertosJ2);
+        mostrarGanadorPrueba(ganador);
+
+        // Puntos en funcion de los aciertos de numeros romanos
+        int puntosJ1 = lógica.calcularPuntosCronusRomanus(aciertosJ1);
+        int puntosJ2 = lógica.calcularPuntosCronusRomanus(aciertosJ2);
+        mostrarMarcadorPrueba(puntosJ1, puntosJ2);
+
+        // Sumar al marcador global
+        Main.puntosTotalesJ1 += puntosJ1;
+        Main.puntosTotalesJ2 += puntosJ2;
+
+        return ganador;
+    }
+
+    public static int jugarTurnoCronus(int jugador, int cantidadPreguntas) {
+        System.out.println("\n--- Turno del Jugador " + jugador + " ---");
+        System.out.print("Pulsa ENTER para comenzar las preguntas...");
+        Main.sc.nextLine();
+
+        int aciertos = 0;
+        for (int i = 1; i <= cantidadPreguntas; i++) {
+            int numeroArabigo = lógica.generarNumeroRomano();
+            String romano = lógica.convertirARomano(numeroArabigo);
+
+            mostrarNumeroRomano(romano);
+            int respuesta = pedirRespuestaRomano();
+
+            if (respuesta == numeroArabigo) {
+                System.out.println("¡Correcto!");
+                aciertos++;
+            } else {
+                System.out.println("Incorrecto. El número era " + numeroArabigo + ".");
+            }
+        }
+
+        System.out.println("Aciertos del Jugador " + jugador + ": " + aciertos);
+        return aciertos;
+    }
+
+    // Actualizar la puntuación tras una prueba
+    public static void actualizarPuntuacion(int ganador) {
+        mostrarGanadorPrueba(ganador);
+        if (ganador == 1) {
+            Main.puntosTotalesJ1++;
+        } else if (ganador == 2) {
+            Main.puntosTotalesJ2++;
+        }
+    }
+
+    // Modo Concurso: juega las 4 pruebas seguidas
+    public static void jugarModoConcurso() {
+        System.out.println("\n==================================================");
+        System.out.println("          ¡COMIENZA EL MODO CONCURSO!             ");
+        System.out.println("==================================================");
+
+        Main.puntosTotalesJ1 = 0;
+        Main.puntosTotalesJ2 = 0;
+
+        // 1. La palabra más larga
+        System.out.println("\n>>> PRUEBA 1: LA PALABRA MÁS LARGA <<<");
+        int ganadorLetras = jugarPalabraMasLarga();
+        actualizarPuntuacion(ganadorLetras);
+        mostrarMarcadorGlobal(Main.puntosTotalesJ1, Main.puntosTotalesJ2);
+
+        // 2. La cifra exacta
+        System.out.println("\n>>> PRUEBA 2: LA CIFRA EXACTA <<<");
+        int ganadorCifra = jugarCifraExacta();
+        actualizarPuntuacion(ganadorCifra);
+        mostrarMarcadorGlobal(Main.puntosTotalesJ1, Main.puntosTotalesJ2);
+
+        // 3. La calculadora humana
+        System.out.println("\n>>> PRUEBA 3: LA CALCULADORA HUMANA <<<");
+        jugarCalculadoraHumana();
+        mostrarMarcadorGlobal(Main.puntosTotalesJ1, Main.puntosTotalesJ2);
+
+        // 4. Cronus Rumanus
+        System.out.println("\n>>> PRUEBA 4: CRONUS RUMANUS <<<");
+        jugarCronusRumanus();
+        mostrarMarcadorGlobal(Main.puntosTotalesJ1, Main.puntosTotalesJ2);
+
+        // Ganador final del concurso
+        int ganadorFinal = lógica.ganadorConcurso(Main.puntosTotalesJ1, Main.puntosTotalesJ2);
+        mostrarGanadorConcurso(ganadorFinal);
+    }
+
+    // Modo Rápido: juega una sola prueba elegida al azar
+    public static void jugarModoRapido() {
+        System.out.println("\n==================================================");
+        System.out.println("           MODO RÁPIDO: PRUEBA AL AZAR            ");
+        System.out.println("==================================================");
+
+        int prueba = lógica.generarPruebaAleatoria();
+
+        switch (prueba) {
+            case 1:
+                System.out.println("La prueba seleccionada al azar es: ¡La palabra más larga!");
+                jugarPalabraMasLarga();
+                break;
+            case 2:
+                System.out.println("La prueba seleccionada al azar es: ¡La cifra exacta!");
+                jugarCifraExacta();
+                break;
+            case 3:
+                System.out.println("La prueba seleccionada al azar es: ¡La calculadora humana!");
+                jugarCalculadoraHumana();
+                break;
+            case 4:
+                System.out.println("La prueba seleccionada al azar es: ¡Cronus Rumanus!");
+                jugarCronusRumanus();
+                break;
+        }
+    }
+
+    /**
+     * Comprobarcion con un text automatico para ver si todas las funciones funcionan
+     */
+    // Test de comprobación de todas las funciones
+    public static void probarTodasLasFunciones() {
+        System.out.println("\n==================================================");
+        System.out.println("     TEST DE TODAS LAS FUNCIONES (SIN ARRAYS)     ");
+        System.out.println("==================================================");
+
+        // 1. LA PALABRA MÁS LARGA
+        System.out.println("\n--- 1. Pruebas: La palabra más larga ---");
+        String letras = lógica.generarLetras();
+        System.out.println("lógica.generarLetras() -> " + letras);
+
+        boolean soloLetrasValido = lógica.contieneSoloLetras("HOLA");
+        boolean soloLetrasInvalido = lógica.contieneSoloLetras("HOLA123");
+        System.out.println("lógica.contieneSoloLetras(\"HOLA\") -> " + soloLetrasValido);
+        System.out.println("lógica.contieneSoloLetras(\"HOLA123\") -> " + soloLetrasInvalido);
+
+        boolean palabraValida = lógica.esValidaPorLetras("CASA", "ABCDEFSA");
+        System.out.println("lógica.esValidaPorLetras(\"CASA\", \"ABCDEFSA\") -> " + palabraValida);
+
+        int ganadorL = lógica.ganadorLetras(7, 4);
+        System.out.println("lógica.ganadorLetras(7, 4) -> Ganador: " + ganadorL);
+
+        // 2. LA CIFRA EXACTA
+        System.out.println("\n--- 2. Pruebas: La cifra exacta ---");
+        int numObjetivo = lógica.generarNumeroAleatorio();
+        int numAux = lógica.generarNumeroAuxiliar();
+        System.out.println("lógica.generarNumeroAleatorio() -> " + numObjetivo);
+        System.out.println("lógica.generarNumeroAuxiliar() -> " + numAux);
+
+        boolean divExacta = lógica.validarDivision(20, 4);
+        boolean divInexacta = lógica.validarDivision(20, 3);
+        System.out.println("lógica.validarDivision(20, 4) -> " + divExacta);
+        System.out.println("lógica.validarDivision(20, 3) -> " + divInexacta);
+
+        int dif = lógica.calculoDiferencial(500, 492);
+        System.out.println("lógica.calculoDiferencial(500, 492) -> " + dif);
+
+        int ganadorC = lógica.ganadorCifraExacta(500, 498, 506);
+        System.out.println("lógica.ganadorCifraExacta(500, 498, 506) -> Ganador: " + ganadorC);
+
+        int ptsExacto = lógica.calcularPuntosCifraExacta(0);
+        int ptsCercano = lógica.calcularPuntosCifraExacta(4);
+        System.out.println("lógica.calcularPuntosCifraExacta(0) -> " + ptsExacto + " pts");
+        System.out.println("lógica.calcularPuntosCifraExacta(4) -> " + ptsCercano + " pts");
+
+        // 3. LA CALCULADORA HUMANA
+        System.out.println("\n--- 3. Pruebas: La calculadora humana ---");
+        int nCalc = lógica.generarorAleatorioCalculadora();
+        int nSec = lógica.generadorSecundario('+');
+        System.out.println("lógica.generarorAleatorioCalculadora() -> " + nCalc);
+        System.out.println("lógica.generadorSecundario('+') -> " + nSec);
+
+        int calcSuma = lógica.calcularResultado(25, '+', 10);
+        int calcResta = lógica.calcularResultado(25, '-', 10);
+        int calcMult = lógica.calcularResultado(5, '*', 4);
+        int calcDiv = lógica.calcularResultado(20, '/', 2);
+        System.out.println("lógica.calcularResultado(25, '+', 10) -> " + calcSuma);
+        System.out.println("lógica.calcularResultado(25, '-', 10) -> " + calcResta);
+        System.out.println("lógica.calcularResultado(5, '*', 4) -> " + calcMult);
+        System.out.println("lógica.calcularResultado(20, '/', 2) -> " + calcDiv);
+
+        boolean respCorrecta = lógica.esRespuestaCorrecta(35, 35);
+        System.out.println("lógica.esRespuestaCorrecta(35, 35) -> " + respCorrecta);
+
+        long tPenalizado = lógica.tiempoFinal(40, false);
+        System.out.println("lógica.tiempoFinal(40, false) [+20s] -> " + tPenalizado);
+
+        int ganadorCalc = lógica.ganadorCalculadora(30, 45);
+        System.out.println("lógica.ganadorCalculadora(30, 45) -> Ganador: " + ganadorCalc);
+
+        // Puntos de ambos jugadores segun su tiempo (300 - tiempo)
+        int ptsCalcJ1 = lógica.calcularPuntosIndividualCalculadora(30);
+        int ptsCalcJ2 = lógica.calcularPuntosIndividualCalculadora(45);
+        System.out.println("lógica.calcularPuntosIndividualCalculadora(30s) -> J1: " + ptsCalcJ1 + " pts");
+        System.out.println("lógica.calcularPuntosIndividualCalculadora(45s) -> J2: " + ptsCalcJ2 + " pts");
+
+        // 4. CRONUS RUMANUS
+        System.out.println("\n--- 4. Pruebas: Cronus Rumanus ---");
+        int nRom = lógica.generarNumeroRomano();
+        System.out.println("lógica.generarNumeroRomano() -> " + nRom);
+
+        String rom1 = lógica.convertirARomano(1984);
+        String rom2 = lógica.convertirARomano(2024);
+        String rom3 = lógica.convertirARomano(3999);
+        System.out.println("lógica.convertirARomano(1984) -> " + rom1);
+        System.out.println("lógica.convertirARomano(2024) -> " + rom2);
+        System.out.println("lógica.convertirARomano(3999) -> " + rom3);
+
+        int ganadorCronus = lógica.ganadorCronusRuma(9, 6);
+        System.out.println("lógica.ganadorCronusRuma(9, 6) -> Ganador: " + ganadorCronus);
+
+        // Puntos de ambos jugadores segun sus aciertos
+        int ptsCronusJ1 = lógica.calcularPuntosCronusRomanus(9);
+        int ptsCronusJ2 = lógica.calcularPuntosCronusRomanus(6);
+        System.out.println("lógica.calcularPuntosCronusRomanus(9) -> J1: " + ptsCronusJ1 + " pts");
+        System.out.println("lógica.calcularPuntosCronusRomanus(6) -> J2: " + ptsCronusJ2 + " pts");
+
+        // 5. MARCADOR Y CONCURSO
+        System.out.println("\n--- 5. Pruebas: Marcador y Ganador Concurso ---");
+        // Simular marcador: Letras (J1 gana +1), Cifra (J1 gana +1), Calculadora (270 vs 255), Cronus (9 vs 6)
+        int totalSimJ1 = 1 + 1 + ptsCalcJ1 + ptsCronusJ1;
+        int totalSimJ2 = 0 + 0 + ptsCalcJ2 + ptsCronusJ2;
+        System.out.println("Simulacion marcador global -> J1: " + totalSimJ1 + " pts | J2: " + totalSimJ2 + " pts");
+        int ganadorFinal = lógica.ganadorConcurso(totalSimJ1, totalSimJ2);
+        System.out.println("lógica.ganadorConcurso(" + totalSimJ1 + ", " + totalSimJ2 + ") -> Ganador concurso: " + ganadorFinal);
+
+        // 6. MÉTODOS DE VISUALIZACIÓN DE INTERFAZ
+        System.out.println("\n--- 6. Pruebas de visualización de interfaz.java ---");
+        mostrarLetras("ABCDEFGHIJ");
+        mostrarMarcadorPrueba(10, 5);
+        mostrarGanadorPrueba(1);
+        mostrarMarcadorGlobal(3, 1);
+        mostrarGanadorConcurso(1);
+
+        System.out.println("\n==================================================");
+        System.out.println("   ¡TODAS LAS FUNCIONES PROBADAS EXITOSAMENTE!    ");
+        System.out.println("==================================================");
     }
 
     // Ganador final del concurso (0 = empate)

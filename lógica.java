@@ -9,6 +9,11 @@ public class lógica {
     static int puntosTotalesJ2 = 0;
     static int segundosMaximos = 300;
 
+    // Generador de pruebas aleatorias para el modo rapido
+    public static int generarPruebaAleatoria() {
+        return rd.nextInt(1, 5); 
+    }
+
     public static String generarLetras() {
         String vocales = "AEIOU";
         String consonantes = "BCDFGHJKLMNÑPQRSTVWXYZ";
@@ -88,6 +93,17 @@ public class lógica {
     public static int generarNumeroAuxiliar() {
         int auxiliar = rd.nextInt(1, 11);
         return auxiliar;
+    }
+
+    // Generador de números auxiliares para la Cifra exacta
+    public static String generarNumerosAuxiliares() {
+        int aux1 = generarNumeroAuxiliar();
+        int aux2 = generarNumeroAuxiliar();
+        int aux3 = generarNumeroAuxiliar();
+        int aux4 = generarNumeroAuxiliar();
+        int aux5 = generarNumeroAuxiliar();
+        int aux6 = generarNumeroAuxiliar();
+        return aux1 + ", " + aux2 + ", " + aux3 + ", " + aux4 + ", " + aux5 + ", " + aux6;
     }
 
     // Validador de operaciones aritmetricas
