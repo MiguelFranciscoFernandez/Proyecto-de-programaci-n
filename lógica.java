@@ -407,6 +407,16 @@ public class lógica {
         puntosTotalesJ2 += puntosPruebaJ2;
     }
 
+    // Actualizar la puntuación tras una prueba
+    public static void actualizarPuntuacion(int ganador) {
+        interfaz.mostrarGanadorPrueba(ganador);
+        if (ganador == 1) {
+            Main.puntosTotalesJ1++;
+        } else if (ganador == 2) {
+            Main.puntosTotalesJ2++;
+        }
+    }
+
     //Ganador del concuros
     public static int ganadorConcurso(int puntosTotalesJ1, int puntosTotalesJ2){
         if(puntosTotalesJ1 > puntosTotalesJ2){

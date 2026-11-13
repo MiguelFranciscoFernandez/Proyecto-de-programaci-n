@@ -545,15 +545,6 @@ public class interfaz {
         return aciertos;
     }
 
-    // Actualizar la puntuación tras una prueba
-    public static void actualizarPuntuacion(int ganador) {
-        mostrarGanadorPrueba(ganador);
-        if (ganador == 1) {
-            Main.puntosTotalesJ1++;
-        } else if (ganador == 2) {
-            Main.puntosTotalesJ2++;
-        }
-    }
 
     // Modo Concurso: juega las 4 pruebas seguidas
     public static void jugarModoConcurso() {
@@ -567,13 +558,13 @@ public class interfaz {
         // 1. La palabra más larga
         System.out.println("\n>>> PRUEBA 1: LA PALABRA MÁS LARGA <<<");
         int ganadorLetras = jugarPalabraMasLarga();
-        actualizarPuntuacion(ganadorLetras);
+        lógica.actualizarPuntuacion(ganadorLetras);
         mostrarMarcadorGlobal(Main.puntosTotalesJ1, Main.puntosTotalesJ2);
 
         // 2. La cifra exacta
         System.out.println("\n>>> PRUEBA 2: LA CIFRA EXACTA <<<");
         int ganadorCifra = jugarCifraExacta();
-        actualizarPuntuacion(ganadorCifra);
+        lógica.actualizarPuntuacion(ganadorCifra);
         mostrarMarcadorGlobal(Main.puntosTotalesJ1, Main.puntosTotalesJ2);
 
         // 3. La calculadora humana
@@ -620,7 +611,10 @@ public class interfaz {
     }
 
     /**
-     * Comprobarcion con un text automatico para ver si todas las funciones funcionan
+     * Comprobarcion con un text automatico para ver si todas las funciones funcionan de forma correcta
+     * Text Verificador de fumciones
+     * @author David Espejo Piñero
+     * @version 1.0
      */
     // Test de comprobación de todas las funciones
     public static void probarTodasLasFunciones() {
